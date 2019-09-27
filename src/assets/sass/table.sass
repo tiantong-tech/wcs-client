@@ -1,0 +1,36 @@
+@import '~bulma/sass/elements/table'
+
+.table
+  &.is-centered
+    th, td
+      text-align: center
+  &.is-nowrap
+    th, td
+      white-space: nowrap
+  &.is-vcentered
+    th, td
+      vertical-align: middle
+  th, td
+    &.is-vcentered
+      vertical-align: middle
+    &.is-centered
+      text-align: center
+    &.is-editable
+      padding: 0
+      overflow: visible
+      .background
+        z-index: 99999
+        background-color: rgba($black, 0.2)
+      .input
+        z-index: 100000
+
+    &.is-clickable
+      cursor: pointer
+    &.is-hoverable
+      &:hover
+        background: $background
+    &.is-checkbox
+      width: 1px
+      cursor: pointer
+  &:not(:last-child)
+    margin-bottom: 0

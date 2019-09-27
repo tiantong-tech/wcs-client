@@ -1,0 +1,49 @@
+@charset 'utf-8'
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700')
+
+// bulma
+@import '~bulma/sass/utilities/_all.sass'
+@import '~bulma/sass/base/_all.sass'
+@import './variables.sass'
+@import './fix.sass'
+
+// component style
+@import '@/views/App/Level/style.sass'
+@import '@/views/Systems/style.sass'
+@import '@/plugins/message/style.sass'
+@import '@/plugins/confirmation/style.sass'
+
+// bulma modules
+@import '~bulma/sass/form/_all'
+@import '~bulma/sass/grid/columns'
+@import '~bulma/sass/elements/box'
+@import '~bulma/sass/elements/tag'
+@import '~bulma/sass/elements/image'
+@import '~bulma/sass/elements/title'
+@import '~bulma/sass/elements/other'
+@import '~bulma/sass/elements/button'
+@import '~bulma/sass/elements/content'
+@import '~bulma/sass/components/level'
+@import '~bulma/sass/components/modal'
+@import '~bulma/sass/components/panel'
+@import '~bulma/sass/components/message'
+@import '~bulma/sass/components/pagination'
+
+// bulma improve
+@import './icon.sass'
+@import './menu.sass'
+@import './table.sass'
+@import './dropdown.sass'
+@import './container.sass'
+@import './breadcrumb.sass'
+@import './background.sass'
+
+// modules
+@import './helpers.sass'
+@import './page-settings.sass'
+
+html
+  overflow-y: auto
+
+.content:not(:last-child)
+  margin-bottom: 1.5rem

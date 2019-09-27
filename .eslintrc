@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "plugin:vue/essential",
+    "eslint:recommended",
+    "@vue/typescript"
+  ],
+  "rules": {
+    "camelcase": 0,
+    "no-console": 0,
+    "no-sequences": 0,
+    "no-return-assign": 0,
+    "object-property-newline": 0,
+    "vue/return-in-computed-property": 0
+  },
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser"
+  }
+}

@@ -1,0 +1,19 @@
+.system-item
+  display: flex
+  width: 100%
+  color: $text
+  align-items: center
+  justify-content: flex-start
+  padding: 0.5em 0.75em
+  min-height: 4rem
+  &:hover,
+  &.is-active
+    background-color: $background
+  .button
+    &.is-setting
+      &:not(:last-child)
+        margin-right: 0.75rem
+      border: none
+      background-color: rgba($info, 0.3)
+      &:hover
+        background-color: rgba($info, 0.2)

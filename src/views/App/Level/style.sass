@@ -1,0 +1,26 @@
+$level-height: 4rem
+
+#level
+  z-index: 10000
+  min-height: $level-height
+  background-color: $white
+  border-bottom: 1px solid $border
+  .level
+    height: $level-height
+    display: flex
+    align-items: center
+    font-size: 1.125rem
+    padding: 0 0.75rem 0 0.75rem
+    #logo
+      font-size: $size-4
+      cursor: pointer
+      font-weight: 500
+      color: $text
+    .level-item
+      &:not(:last-child)
+        cursor: pointer
+        margin-right: 1rem
+      .is-matched
+        color: $text
+        cursor: default
+        font-weight: bold

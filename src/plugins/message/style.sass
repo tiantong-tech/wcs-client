@@ -1,0 +1,20 @@
+.app-messages
+  top: 0
+  left: 0
+  width: 100vw
+  padding-top: 1.5rem
+  position: fixed
+  z-index: 99999
+  .message
+    display: flex
+    align-items: center
+    color: $text
+    padding: 1.5rem
+    min-width: 320px
+    margin-bottom: 0.75rem
+    @each $name, $pair in $colors
+      $color: nth($pair, 1)
+      $color-invert: nth($pair, 2)
+      $color-lightning: max((100% - lightness($color)) - 8%, 0%)
+      &.is-#{$name}
+        background-color: lighten($color, $color-lightning)
