@@ -37,7 +37,7 @@
             </li>
             <li class="is-active">
               <a>
-                设备信息
+                {{hoister.name || '设备信息'}}
               </a>
             </li>
           </ul>

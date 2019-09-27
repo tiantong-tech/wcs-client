@@ -27,10 +27,10 @@ export default {
   }),
   computed: {
     hoisters () {
-      return dataSet.map(this.dataSource.hoisters)
+      // return dataSet.map(this.dataSource.hoisters)
     },
     floors () {
-      return dataSet.map(this.dataSource.floors)
+      // return dataSet.map(this.dataSource.floors)
     }
   },
   created () {

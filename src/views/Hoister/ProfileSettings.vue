@@ -51,9 +51,13 @@
              v-model="params.plc_command_port"
             style="width: 80px; margin-right: 0.5rem"
           >
-          <a class="button is-success">
+          <Button
+            @click="handlePlcTest"
+            :isLoading="isTesting"
+            class="is-success"
+          >
             连接测试
-          </a>
+          </Button>
         </div>
       </div>
     </div>
@@ -92,6 +96,40 @@
       </div>
     </div>
     <hr>
+    <div class="content">
+      <p class="title is-4">去向任务</p>
+      <p>
+        通过将去向任务的值写入软元件，直接操作设备。
+      </p>
+    </div>
+    <div class="is-flex">
+      <div class="field" style="width: 280px">
+        <label class="label">软元件寄存器</label>
+        <div class="control">
+          <input
+            v-model="dispatch.address"
+            type="text" class="input"
+          >
+        </div>
+      </div>
+      <div style="width: 0.5rem"></div>
+      <div class="field" style="width: 280px">
+        <label class="label">路径</label>
+        <div class="control">
+          <input
+            v-model="dispatch.value"
+            type="text" class="input"
+            style="width: 80px; margin-right: 0.5rem"
+          >
+          <Button
+            class="is-success"
+            :isLoading="dispatch.isLoading"
+            @click="handleDispatch"
+          >执行</Button>
+        </div>
+      </div>
+    </div>
+    <hr>
     <Button
       @click="handleSave"
       :disabled="!isChanged"
@@ -101,6 +139,7 @@
 </template>
 
 <script>
+import axios from '@/providers/axios'
 import dataEditor from '@/utils/data-editor'
 
 export default {
@@ -117,6 +156,12 @@ export default {
       plc_command_port: 0,
       heartbeat_address: 0,
       heartbeat_interval: 0,
+    },
+    isTesting: false,
+    dispatch: {
+      value: '12',
+      address: '002201',
+      isLoading: false
     }
   }),
   computed: {
@@ -133,6 +178,62 @@ export default {
       return dataEditor.save('/hoisters/update', { hoister })
         .then(() => {
           this.$emit('refresh')
+        })
+    },
+    handlePlcTest () {
+      const params = {
+        host: this.params.plc_host,
+        task_port: this.params.plc_task_port,
+        command_port: this.params.plc_command_port
+      }
+      function trans (value) {
+        return value ? '成功' : '失败'
+      }
+
+      this.isTesting = true
+      axios.post('plcs/test', params)
+        .then(response => {
+          const [task, command] = response.data
+          this.$confirm({
+            title: 'Plc 连接测试',
+            content: `任务端口连接 ${trans(task)}, 指令端口连接 ${trans(command)}`,
+          })
+        })
+        .finally(() => this.isTesting = false)
+    },
+    handleDispatch () {
+      const params = {
+        host: this.params.plc_host,
+        port: this.params.plc_command_port,
+        address: this.dispatch.address,
+        value: this.dispatch.value
+      }
+
+      axios.post('/plcs/dispatch', params)
+        .then(response => {
+          const result = response.data.result
+
+          this.$confirm({
+            title: '提示',
+            content: result ? `去向任务下发成功，开始执行` : `去向任务下发失败，请检查指令`,
+          })
+
+          if (!result) return
+
+          this.dispatch.isLoading = true
+          const itv = setInterval(() => {
+            axios.post('plcs/state', params)
+              .then(response => {
+                if (response.data.result === '0001') {
+                  clearInterval(itv)
+                  this.dispatch.isLoading = false
+                  this.$confirm({
+                    title: '提示',
+                    content: '去向任务执行完毕'
+                  })
+                }
+              })
+          }, 1000)
         })
     }
   },

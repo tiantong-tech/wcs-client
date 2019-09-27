@@ -28,6 +28,10 @@ export function push (data, ...params) {
   Object.assign(data.data, state.data)
 }
 
+export function map () {
+
+}
+
 export default {
   push,
   from,
