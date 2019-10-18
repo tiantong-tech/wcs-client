@@ -24,7 +24,7 @@
         class="button is-setting"
       >
         <span class="icon">
-          <i v-if="isPlaying" class="iconfont icon-stop"></i>
+          <i v-if="system.is_running" class="iconfont icon-stop"></i>
           <i v-else class="iconfont icon-play"></i>
         </span>
       </a>
@@ -52,7 +52,6 @@ export default {
   data () {
     return {
       isHovered: false,
-      isPlaying: false,
     }
   },
   computed: {
@@ -62,11 +61,24 @@ export default {
   },
   methods: {
     handlePlayClick () {
-      this.$confirm({
-        title: '确认',
-        content: this.isPlaying ? '停止设备程序' : '启动设备程序',
-        handler: () => { this.isPlaying = !this.isPlaying }
-      })
+      const params = {
+        hoister_id: this.system.id
+      }
+      if (this.system.is_running) {
+        this.$confirm({
+          title: '操作',
+          content:  '停止设备后台程序',
+          handler: () => axios.post('hoisters/stop', params)
+            .then(() => { this.system.is_running = false })
+        })
+      } else {
+        this.$confirm({
+          title: '操作',
+          content: '启动设备后台程序',
+          handler: () => axios.post('hoisters/run', params)
+            .then(() => this.system.is_running = true)
+        })
+      }
     },
     handleDestroyClick () {
       this.$confirm({

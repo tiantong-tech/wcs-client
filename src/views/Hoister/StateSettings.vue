@@ -16,14 +16,11 @@
     </div>
     <table class="table is-fullwidth is-nowrap is-centered is-vcentered has-border-bottom">
       <thead>
-        <th class="is-centered" colspan="2">
-          <Button
-            class="button is-light"
-            :disabled="isAddingFloor"
-            @click="handleFloorCreate"
-          >添加楼层</Button>
+        <th></th>
+        <th></th>
+        <th class="is-centered" colspan="6">
+          软元件寄存器
         </th>
-        <th class="is-centered" colspan="6" style="padding-bottom: 0">软元件寄存器</th>
         <th></th>
       </thead>
       <thead>
@@ -35,7 +32,12 @@
         <th>D2 - 自动</th>
         <th>D2 - 有货</th>
         <th>D2 - 报警</th>
-        <th></th>
+        <td>
+          <a
+            :disabled="isAddingFloor"
+            @click="handleFloorCreate"
+          >添加楼层</a>
+        </td>
       </thead>
       <tbody>
         <FloorSettings
